@@ -52,13 +52,20 @@ require("packer").startup(function(use)
   -- Adds extra functionality over rust analyzer
   use("simrat39/rust-tools.nvim")
 
+  -- Treesitter
+  use("nvim-treesitter/nvim-treesitter")
+
   -- Optional
   use("nvim-lua/popup.nvim")
   use("nvim-lua/plenary.nvim")
-  use("nvim-telescope/telescope.nvim")
+  use({"nvim-telescope/telescope.nvim", tag = '0.1.x', requires = { { 'nvim-lua/plenary.nvim' } } })
 
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+  }
   -- Some color scheme other then default
-  use("folke/tokyonight.nvim")
+  use("EdenEast/nightfox.nvim")
 end)
 
 -- the first run will install packer and our plugins
@@ -176,6 +183,65 @@ cmp.setup({
     { name = "buffer" },
   },
 })
+
+require('nvim-treesitter.configs').setup {
+    ensure_installed = {"lua", "rust", "toml"},
+    auto_install = true,
+    highlight = {
+        enable = true,
+        additional_vim_regex_highlighting=false,
+    },
+    ident = { enable = true },
+    rainbow = {
+        enable = true,
+        extended_mode = true,
+        max_file_lines = nil,
+    }
+}
+
+local status, lualine = pcall(require, "lualine")
+if (not status) then return end
+
+lualine.setup {
+  options = {
+    icons_enabled = true,
+    theme = 'horizon',
+    section_separators = { left = '', right = '' },
+    component_separators = { left = '', right = '' },
+    disabled_filetypes = {}
+  },
+  sections = {
+    lualine_a = { 'mode' },
+    lualine_b = { 'branch' },
+    lualine_c = { {
+      'filename',
+      file_status = true, -- displays file status (readonly status, modified status)
+      path = 0 -- 0 = just filename, 1 = relative path, 2 = absolute path
+    } },
+    lualine_x = {
+      { 'diagnostics', sources = { "nvim_diagnostic" }, symbols = { error = ' ', warn = ' ', info = ' ',
+        hint = ' ' } },
+      'encoding',
+      'filetype'
+    },
+    lualine_y = { 'progress' },
+    lualine_z = { 'location' }
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = { {
+      'filename',
+      file_status = true, -- displays file status (readonly status, modified status)
+      path = 1 -- 0 = just filename, 1 = relative path, 2 = absolute path
+    } },
+    lualine_x = { 'location' },
+    lualine_y = {},
+    lualine_z = {}
+  },
+  tabline = {},
+  extensions = { 'fugitive' }
+}
 
 -- have a fixed column for the diagnostics to appear in
 -- this removes the jitter when warnings/errors flow in
