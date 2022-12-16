@@ -1,6 +1,8 @@
 local nnoremap = require("matthias.keymap").nnoremap
 
 nnoremap("<leader>pv", "<cmd>Ex<CR>")
+nnoremap("j", "jzz")
+nnoremap("k", "kzz")
 
 -- Telescope
 local builtin = require('telescope.builtin')
