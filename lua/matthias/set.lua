@@ -19,6 +19,6 @@ vim.g.mapleader = " "
 -- netrw
 vim.g.netrw_liststyle = 3 -- tree view
 vim.g.netrw_banner = 0 -- disable banner
-vim.g.netrw_browse_split = 2 -- vertical split
-vim.g.netrw_winsize = 80 
+--vim.g.netrw_browse_split = 2 -- vertical split
+--vim.g.netrw_winsize = 80 
 
