@@ -20,6 +20,9 @@ lsp.configure('sumneko_lua', {
     }
 })
 
+--lsp.configure('tsserver', {
+--    filetypes = { "typescript", "typescriptreact", "typescript.tsx" }
+--})
 
 local cmp = require('cmp')
 local cmp_select = {behavior = cmp.SelectBehavior.Select}
