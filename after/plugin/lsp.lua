@@ -20,10 +20,6 @@ lsp.configure('sumneko_lua', {
     }
 })
 
---lsp.configure('tsserver', {
---    filetypes = { "typescript", "typescriptreact", "typescript.tsx" }
---})
-
 local cmp = require('cmp')
 local cmp_select = {behavior = cmp.SelectBehavior.Select}
 local cmp_mappings = lsp.defaults.cmp_mappings({
@@ -43,7 +39,7 @@ lsp.setup_nvim_cmp({
 })
 
 lsp.set_preferences({
-    suggest_lsp_servers = false,
+--    suggest_lsp_servers = false,
     sign_icons = {
         error = 'E',
         warn = 'W',
@@ -55,10 +51,10 @@ lsp.set_preferences({
 lsp.on_attach(function(client, bufnr)
   local opts = {buffer = bufnr, remap = false}
 
-  if client.name == "eslint" then
-      vim.cmd.LspStop('eslint')
-      return
-  end
+ -- if client.name == "eslint" then
+  --    vim.cmd.LspStop('eslint')
+   --   return
+ -- end
 
   vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
   vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
@@ -72,6 +68,7 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
 end)
 
+lsp.nvim_workspace()
 lsp.setup()
 
 vim.diagnostic.config({
