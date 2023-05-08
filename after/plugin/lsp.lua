@@ -1,27 +1,21 @@
 local lsp = require("lsp-zero")
+--require("lspconfig").volar.setup({
+--  on_attach = function(client)
+--    client.server_capabilities.document_formatting = false
+--    client.server_capabilities.document_range_formatting = false
+--  end,
+--})
 
 lsp.preset("recommended")
 
 lsp.ensure_installed({
   'tsserver',
   'eslint',
-  'sumneko_lua',
   'rust_analyzer',
 })
 
--- Fix Undefined global 'vim'
-lsp.configure('sumneko_lua', {
-    settings = {
-        Lua = {
-            diagnostics = {
-                globals = { 'vim' }
-            }
-        }
-    }
-})
-
 local cmp = require('cmp')
-local cmp_select = {behavior = cmp.SelectBehavior.Select}
+local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mappings = lsp.defaults.cmp_mappings({
   ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
   ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
@@ -39,22 +33,22 @@ lsp.setup_nvim_cmp({
 })
 
 lsp.set_preferences({
---    suggest_lsp_servers = false,
-    sign_icons = {
-        error = 'E',
-        warn = 'W',
-        hint = 'H',
-        info = 'I'
-    }
+  --    suggest_lsp_servers = false,
+  sign_icons = {
+    error = 'E',
+    warn = 'W',
+    hint = 'H',
+    info = 'I'
+  }
 })
 
 lsp.on_attach(function(client, bufnr)
-  local opts = {buffer = bufnr, remap = false}
+  local opts = { buffer = bufnr, remap = false }
 
- -- if client.name == "eslint" then
+  -- if client.name == "eslint" then
   --    vim.cmd.LspStop('eslint')
-   --   return
- -- end
+  --   return
+  -- end
 
   vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
   vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
@@ -72,5 +66,5 @@ lsp.nvim_workspace()
 lsp.setup()
 
 vim.diagnostic.config({
-    virtual_text = true,
+  virtual_text = true,
 })

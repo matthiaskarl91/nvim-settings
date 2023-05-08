@@ -46,9 +46,10 @@ return require('packer').startup(function(use)
 	  }
   }
 
-  -- prettier
-  use('jose-elias-alvarez/null-ls.nvim')
-  use('MunifTanjim/prettier.nvim')
+  use({
+    "jose-elias-alvarez/null-ls.nvim",
+    requires = { "nvim-lua/plenary.nvim" },
+  })
 
   use {
 	  'nvim-lualine/lualine.nvim',
@@ -58,12 +59,12 @@ return require('packer').startup(function(use)
   use('airblade/vim-gitgutter')
 
   use {
-    'saecki/crates.nvim',
-    tag = 'v0.3.0',
-    requires = { 'nvim-lua/plenary.nvim' },
-    config = function()
-        require('crates').setup()
-    end,
-}
+      'saecki/crates.nvim',
+      tag = 'v0.3.0',
+      requires = { 'nvim-lua/plenary.nvim' },
+      config = function()
+          require('crates').setup()
+      end,
+  }
 end)
 
